@@ -24,6 +24,26 @@ ConnReturnCode.__tostring = function(t)
     return require "lumina.utils".packet_string("ConnReturnCode", t)
 end
 
+function ConnReturnCode.is_ret_code_accept(ret_code)
+    if ret_code == 0 then return 1 end
+    if ret_code == ConnReturnCode.UNACCEPTABLE_PROTOCOL_VERSION then
+        return nil, "UNACCEPTABLE PROTOCOL VERSION"
+    end
+    if ret_code == ConnReturnCode.IDENTIFIER_REJECTED then
+        return nil, "IDENTIFIER REJECTED"
+    end
+    if ret_code == ConnReturnCode.SERVICE_UNAVAILABLE then
+        return nil, "SERVICE UNAVAILABLE"
+    end
+    if ret_code == ConnReturnCode.BAD_USER_NAME_OR_PASSWORD then
+        return nil, "BAD USER NAME OR PASSWORD"
+    end
+    if ret_code == ConnReturnCode.NOT_AUTHORIZED then
+        return nil, "NOT AUTHORIZED"
+    end
+    return nil, "UNKNOWN RETURN CODE " .. tostring(ret_code)
+end
+
 function ConnReturnCode.from(value)
     return setmetatable({
         value = value,
